@@ -1,0 +1,41 @@
+name: Validate Part 1 Documentation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate docs folder
+        run: |
+          test -d docs
+
+      - name: Validate ERD
+        run: |
+          test -f docs/ERD.png
+
+      - name: Validate API endpoint plan
+        run: |
+          test -f docs/RaceDay_API_Endpoint_Plan.md
+
+      - name: Validate SQL database script
+        run: |
+          test -f docs/RaceDay_Database.sql
+
+      - name: Validate documentation README
+        run: |
+          test -f docs/README.md
+
+      - name: Part 1 validation complete
+        run: |
+          echo "All required RaceDay Part 1 documentation files are present."
