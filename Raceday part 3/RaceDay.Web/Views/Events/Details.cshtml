@@ -1,0 +1,11 @@
+@model EventDetailsViewModel
+@{ ViewData["Title"] = Model.Event.EventName; var e = Model.Event; var participant = Context.Session.GetString("Role") == "Participant"; }
+<div class="page-header"><div><span class="eyebrow dark">@e.EventType.ToUpperInvariant() / @e.EventDate.ToString("dd MMM yyyy")</span><h1>@e.EventName.ToUpperInvariant()</h1><p>@e.Location</p></div><a class="btn btn-outline-race" asp-action="Explore">All events</a></div>
+@if (!string.IsNullOrWhiteSpace(e.BannerUrl)) { <img class="event-hero-image mb-4" src="@e.BannerUrl" alt="Banner for @e.EventName" /> }
+<div class="row g-4 mb-5"><div class="col-lg-8"><div class="content-panel h-100"><h2 class="h4 fw-bold">About the event</h2><p>@(e.Description ?? "Join us for a great race day.")</p>
+<div class="detail-metrics"><div><span>Date</span><strong>@e.EventDate.ToString("dddd, dd MMMM yyyy")</strong></div><div><span>Start</span><strong>@e.StartTime.ToString(@"hh\:mm")</strong></div><div><span>Distance</span><strong>@e.DistanceKm km</strong></div><div><span>Capacity</span><strong>@e.MaximumParticipants participants</strong></div></div></div></div>
+<div class="col-lg-4"><div class="content-panel"><span class="eyebrow dark">ENTER THE EVENT</span><h3 class="fw-bold mt-2">Choose your category</h3><p class="text-secondary small">Available event categories</p>
+@if (e.Categories.Count == 0) { <p>No categories are available yet.</p> }
+else if (participant && e.Status == "Open") { <form asp-controller="Enrollments" asp-action="Enter" method="post">@Html.AntiForgeryToken()<input type="hidden" name="eventId" value="@e.EventID" /><label for="categoryID" class="form-label">Category</label><select id="categoryID" name="categoryID" class="form-select mb-3" required>@foreach(var c in e.Categories) { <option value="@c.CategoryID">@c.CategoryName</option> }</select><button type="submit" class="btn btn-race w-100">Enter this event</button></form> }
+else { <ul class="list-unstyled">@foreach(var c in e.Categories) { <li class="mb-2">● @c.CategoryName</li> }</ul><p class="small text-secondary">@(participant ? "This event isn't open for enrolment." : "Sign in as a Participant to enter.")</p> }
+</div></div></div>

@@ -1,0 +1,6 @@
+@model List<EnrollmentDto>
+@{ ViewData["Title"] = "Event entries"; var eventId = (int)ViewBag.EventID; }
+<div class="page-header"><div><span class="eyebrow dark">ORGANISER / PARTICIPANTS</span><h1>EVENT ENTRIES.</h1><p>@Model.Count(e => e.EnrollmentStatus != "Cancelled") active or completed entries</p></div><a class="btn btn-outline-race" asp-controller="Results" asp-action="Event" asp-route-eventId="@eventId">Manage results</a></div>
+<div class="content-panel mb-5">@if (!Model.Any()) { <p>No participants have entered this event yet.</p> } else { <div class="table-responsive"><table class="table align-middle"><thead><tr><th>Participant</th><th>Email</th><th>Category</th><th>Entry date</th><th>Status</th></tr></thead><tbody>
+@foreach(var e in Model) { <tr><td><strong>@e.ParticipantName</strong></td><td>@e.ParticipantEmail</td><td>@e.CategoryName</td><td>@e.EnrollmentDate.ToString("dd MMM yyyy")</td><td><span class="status-pill status-@e.EnrollmentStatus.ToLowerInvariant()">@e.EnrollmentStatus</span></td></tr> }
+</tbody></table></div> }<a class="btn btn-outline-race mt-3" asp-controller="Events" asp-action="Index">Back to events</a></div>

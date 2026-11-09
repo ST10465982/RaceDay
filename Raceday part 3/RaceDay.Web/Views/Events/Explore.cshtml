@@ -1,0 +1,14 @@
+@model EventListViewModel
+@{ ViewData["Title"] = "Explore events"; }
+<div class="page-header"><div><span class="eyebrow dark">PARTICIPANT / DISCOVER</span><h1>FIND YOUR NEXT RACE.</h1><p>Upcoming runs, walks and cycling events.</p></div></div>
+<form method="get" asp-action="Explore" class="filter-bar row g-3 align-items-end mb-4">
+    <div class="col-md-6"><label class="form-label" for="search">Search by name or location</label><input class="form-control" id="search" name="search" value="@Model.Search" placeholder="City, event name..."/></div>
+    <div class="col-md-3"><label class="form-label" for="type">Sport</label><select class="form-select" id="type" name="type"><option value="">All sports</option>@foreach(var sport in new[]{"Run","Walk","Cycle"}) { <option value="@sport" selected="@(Model.Type == sport)">@sport</option> }</select></div>
+    <div class="col-md-3"><button type="submit" class="btn btn-race w-100">Find events</button></div>
+</form>
+@if (!Model.Events.Any()) { <div class="content-panel"><p>No upcoming open events match your filters. Try a different search.</p></div> }
+<div class="row g-4 mb-5">
+@foreach (var race in Model.Events) {
+    <div class="col-md-6 col-xl-4"><article class="event-card h-100"><div class="event-art"><span>@race.EventType.ToUpperInvariant()</span><strong>@race.DistanceKm<span>KM</span></strong></div><div class="p-4"><span class="eyebrow dark">@race.EventDate.ToString("dd MMM yyyy")</span><h2 class="h4 fw-bold mt-2">@race.EventName</h2><p class="text-secondary mb-2">@race.Location</p><p class="small">@(race.Description?.Length > 120 ? race.Description.Substring(0, 120) + "..." : race.Description)</p><a class="btn btn-outline-race w-100" asp-action="Details" asp-route-id="@race.EventID">View event & enter</a></div></article></div>
+}
+</div>

@@ -1,0 +1,4 @@
+@model EventFormViewModel
+@{ ViewData["Title"] = "Edit event"; }
+<div class="page-header"><div><span class="eyebrow dark">ORGANISER / EDIT EVENT</span><h1>FINE-TUNE YOUR EVENT.</h1></div></div>
+<div class="content-panel mb-5"><form asp-action="Edit" asp-route-id="@Model.EventID" method="post" enctype="multipart/form-data">@Html.AntiForgeryToken()<partial name="_Form" model="Model" /></form></div>

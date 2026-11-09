@@ -1,0 +1,4 @@
+@model ResultFormViewModel
+@{ ViewData["Title"] = "Edit result"; }
+<div class="page-header"><div><span class="eyebrow dark">ORGANISER / RACE RESULT</span><h1>CORRECT A RESULT.</h1></div></div>
+<div class="content-panel mb-5"><form asp-action="Edit" asp-route-id="@Model.ResultID" method="post">@Html.AntiForgeryToken()<partial name="_Form" model="Model"/></form></div>

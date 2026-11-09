@@ -1,0 +1,9 @@
+@model List<EventDto>
+@{ ViewData["Title"] = "My events"; }
+<div class="page-header"><div><span class="eyebrow dark">ORGANISER / EVENTS</span><h1>MANAGE EVENTS.</h1></div><a class="btn btn-race" asp-action="Create">+ Create event</a></div>
+<div class="content-panel mb-5">
+@if (!Model.Any()) { <p>No events have been created yet.</p> }
+else { <div class="table-responsive"><table class="table align-middle"><thead><tr><th>Event</th><th>Date / location</th><th>Type</th><th>Status</th><th>Manage</th></tr></thead><tbody>
+@foreach(var e in Model) { <tr><td><strong>@e.EventName</strong><div class="small text-secondary">@e.DistanceKm km</div></td><td>@e.EventDate.ToString("dd MMM yyyy")<div class="small text-secondary">@e.Location</div></td><td>@e.EventType</td><td><span class="status-pill status-@e.Status.ToLowerInvariant()">@e.Status</span></td><td class="table-actions"><a asp-action="Edit" asp-route-id="@e.EventID">Edit</a><a asp-controller="Categories" asp-action="Index" asp-route-eventId="@e.EventID">Categories</a><a asp-controller="Enrollments" asp-action="Event" asp-route-eventId="@e.EventID">Entries</a><a asp-controller="Results" asp-action="Event" asp-route-eventId="@e.EventID">Results</a><form asp-action="Delete" asp-route-id="@e.EventID" method="post" class="d-inline" onsubmit="return confirm('Delete this event?');">@Html.AntiForgeryToken()<button class="link-danger border-0 bg-transparent" type="submit">Delete</button></form></td></tr> }
+</tbody></table></div> }
+</div>

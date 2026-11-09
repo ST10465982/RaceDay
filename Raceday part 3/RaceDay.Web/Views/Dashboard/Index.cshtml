@@ -1,0 +1,10 @@
+@model OrganiserDashboardViewModel
+@{ ViewData["Title"] = "Organiser dashboard"; }
+<div class="page-header"><div><span class="eyebrow dark">ORGANISER / OVERVIEW</span><h1>YOUR RACE CONTROL.</h1><p>Manage the details behind every great event.</p></div><a class="btn btn-race" asp-controller="Events" asp-action="Create">+ Create event</a></div>
+<div class="row g-3 mb-4"><div class="col-md-4"><div class="stat-card"><span>Total events</span><strong>@Model.Events.Count</strong></div></div><div class="col-md-4"><div class="stat-card"><span>Total entries</span><strong>@Model.TotalEnrolments</strong></div></div><div class="col-md-4"><div class="stat-card"><span>Upcoming events</span><strong>@Model.Events.Count(e => e.EventDate.Date >= DateTime.Today)</strong></div></div></div>
+<div class="content-panel"><h2 class="h4 fw-bold mb-4">Your events</h2>
+@if (!Model.Events.Any()) { <p class="text-secondary">No events yet. Create your first race to get started.</p> }
+else { <div class="table-responsive"><table class="table align-middle"><thead><tr><th>Event</th><th>Date</th><th>Entries</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+@foreach (var race in Model.Events) { <tr><td><strong>@race.EventName</strong><div class="text-secondary small">@race.Location</div></td><td>@race.EventDate.ToString("dd MMM yyyy")</td><td>@Model.EnrolmentCounts.GetValueOrDefault(race.EventID, 0)</td><td><span class="status-pill status-@race.Status.ToLowerInvariant()">@race.Status</span></td><td><a asp-controller="Events" asp-action="Edit" asp-route-id="@race.EventID">Edit</a> · <a asp-controller="Enrollments" asp-action="Event" asp-route-eventId="@race.EventID">Entries</a> · <a asp-controller="Results" asp-action="Event" asp-route-eventId="@race.EventID">Results</a></td></tr> }
+</tbody></table></div> }
+</div>

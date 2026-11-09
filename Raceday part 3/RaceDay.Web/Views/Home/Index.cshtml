@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = "Welcome";
+}
+<section class="hero mt-4">
+    <div class="hero-copy">
+        <span class="eyebrow">SOUTH AFRICA / MOVEMENT STARTS HERE</span>
+        <h1>YOUR NEXT <span class="accent-text">FINISH LINE</span> STARTS HERE.</h1>
+        <p>Discover road races, community walks and cycling events. Enter a race, track your journey or bring your next event to life.</p>
+        <div class="d-flex flex-wrap gap-3 mt-4">
+            <a class="btn btn-race btn-lg" asp-controller="Account" asp-action="Register">Get started</a>
+            <a class="btn btn-outline-light btn-lg" asp-controller="Account" asp-action="Login">I have an account</a>
+        </div>
+    </div>
+    <div class="hero-art" aria-hidden="true"><div class="race-circle">RD<span>01</span></div><div class="art-stripe">MOVE / COMPETE / FINISH</div></div>
+</section>
+<div class="row g-4 py-5">
+    <div class="col-md-4"><div class="feature-card"><div class="feature-number">01</div><h3>Find your race</h3><p>Filter upcoming events by sport and location.</p></div></div>
+    <div class="col-md-4"><div class="feature-card"><div class="feature-number">02</div><h3>Choose your category</h3><p>Enter age or distance categories in a few clicks.</p></div></div>
+    <div class="col-md-4"><div class="feature-card"><div class="feature-number">03</div><h3>Own your results</h3><p>See your official times and finishing positions.</p></div></div>
+</div>

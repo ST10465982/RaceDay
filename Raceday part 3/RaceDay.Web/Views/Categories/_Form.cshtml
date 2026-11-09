@@ -1,0 +1,10 @@
+@model CategoryFormViewModel
+<div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+<input asp-for="EventID" type="hidden"/><input asp-for="CategoryID" type="hidden"/>
+<div class="row g-3"><div class="col-md-8"><label asp-for="CategoryName" class="form-label">Category name</label><input asp-for="CategoryName" class="form-control" placeholder="e.g. 10km / Under 20" /><span asp-validation-for="CategoryName" class="text-danger"></span></div>
+<div class="col-md-4"><label asp-for="CategoryType" class="form-label">Category type</label><select asp-for="CategoryType" class="form-select"><option value="Distance">Distance</option><option value="Age">Age</option></select></div>
+<div class="col-md-4"><label asp-for="DistanceKm" class="form-label">Distance (km, for Distance category)</label><input asp-for="DistanceKm" type="number" min="0.1" step="0.1" class="form-control" /></div>
+<div class="col-md-4"><label asp-for="MinimumAge" class="form-label">Minimum age (for Age category)</label><input asp-for="MinimumAge" type="number" min="0" class="form-control" /></div>
+<div class="col-md-4"><label asp-for="MaximumAge" class="form-label">Maximum age (for Age category)</label><input asp-for="MaximumAge" type="number" min="0" class="form-control" /></div>
+<div class="col-12"><label asp-for="Description" class="form-label">Description</label><textarea asp-for="Description" class="form-control" rows="3"></textarea></div></div>
+<button type="submit" class="btn btn-race mt-4">Save category</button><a asp-action="Index" asp-route-eventId="@Model.EventID" class="btn btn-outline-secondary mt-4 ms-2">Back</a>

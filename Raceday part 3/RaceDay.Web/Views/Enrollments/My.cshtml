@@ -1,0 +1,9 @@
+@model List<EnrollmentDto>
+@{ ViewData["Title"] = "My entries"; }
+<div class="page-header"><div><span class="eyebrow dark">PARTICIPANT / ENTRIES</span><h1>YOUR START LINES.</h1><p>Every event you've entered, all in one place.</p></div><a class="btn btn-race" asp-controller="Events" asp-action="Explore">Explore races</a></div>
+<div class="content-panel mb-5">
+@if (!Model.Any()) { <p>You haven't entered any events yet.</p> }
+else { <div class="table-responsive"><table class="table align-middle"><thead><tr><th>Event</th><th>Category</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody>
+@foreach (var e in Model) { <tr><td><strong>@e.EventName</strong><div class="small text-secondary">@e.Location</div></td><td>@e.CategoryName</td><td>@e.EventDate.ToString("dd MMM yyyy")</td><td><span class="status-pill status-@e.EnrollmentStatus.ToLowerInvariant()">@e.EnrollmentStatus</span></td><td>@if(e.EnrollmentStatus == "Active") { <form asp-action="Cancel" asp-route-id="@e.EnrollmentID" method="post">@Html.AntiForgeryToken()<button class="btn btn-sm btn-outline-danger" onclick="return confirm('Cancel this entry?');">Cancel entry</button></form> } else { <span class="text-secondary">—</span> }</td></tr> }
+</tbody></table></div> }
+</div>

@@ -1,0 +1,5 @@
+@model List<ResultDto>
+@{ ViewData["Title"] = "My results"; }
+<div class="page-header"><div><span class="eyebrow dark">PARTICIPANT / RACE HISTORY</span><h1>EVERY FINISH COUNTS.</h1><p>Your official race times and positions.</p></div></div>
+@if (!Model.Any()) { <div class="content-panel"><p>No results recorded yet. Once an Organiser publishes a result, it will appear here.</p></div> }
+else { <div class="row g-4 mb-5">@foreach(var r in Model) { <div class="col-lg-6"><article class="result-card"><span class="eyebrow dark">@r.EventDate.ToString("dd MMM yyyy") · @r.CategoryName</span><h2 class="h3 fw-bold mt-2">@r.EventName</h2><p class="text-secondary">@r.Location</p><div class="result-metrics"><div><span>FINISH TIME</span><strong>@r.FinishTime.ToString(@"hh\:mm\:ss")</strong></div><div><span>OVERALL</span><strong>#@r.OverallPosition <small class="fs-6">of @r.TotalFinishers</small></strong></div><div><span>CATEGORY</span><strong>#@r.CategoryPosition</strong></div></div></article></div> }</div> }

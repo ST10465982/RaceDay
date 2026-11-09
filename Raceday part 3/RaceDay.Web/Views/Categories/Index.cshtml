@@ -1,0 +1,9 @@
+@model List<CategoryDto>
+@{ ViewData["Title"] = "Event categories"; var eventId = (int)ViewBag.EventID; }
+<div class="page-header"><div><span class="eyebrow dark">ORGANISER / CATEGORIES</span><h1>RACE CATEGORIES.</h1></div><a class="btn btn-race" asp-action="Create" asp-route-eventId="@eventId">+ Add category</a></div>
+<div class="content-panel mb-5">
+@if (!Model.Any()) { <p>No categories yet. Add an age or distance category.</p> }
+else { <div class="table-responsive"><table class="table align-middle"><thead><tr><th>Name</th><th>Type</th><th>Criteria</th><th>Actions</th></tr></thead><tbody>
+@foreach (var c in Model) { <tr><td><strong>@c.CategoryName</strong></td><td>@c.CategoryType</td><td>@(c.CategoryType == "Distance" ? $"{c.DistanceKm} km" : $"{c.MinimumAge?.ToString() ?? "Any"}–{c.MaximumAge?.ToString() ?? "Any"} years")</td><td><a asp-action="Edit" asp-route-id="@c.CategoryID">Edit</a><form class="d-inline ms-3" asp-action="Delete" method="post">@Html.AntiForgeryToken()<input type="hidden" name="id" value="@c.CategoryID"/><input type="hidden" name="eventId" value="@c.EventID"/><button type="submit" class="border-0 bg-transparent text-danger" onclick="return confirm('Delete this category?');">Delete</button></form></td></tr> }
+</tbody></table></div> }
+<a class="btn btn-outline-race mt-3" asp-controller="Events" asp-action="Index">Back to events</a></div>

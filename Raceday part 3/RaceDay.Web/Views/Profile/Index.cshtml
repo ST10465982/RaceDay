@@ -1,0 +1,8 @@
+@model ProfileFormViewModel
+@{ ViewData["Title"] = "My profile"; }
+<div class="page-header"><div><span class="eyebrow dark">MY ACCOUNT / PROFILE</span><h1>MAKE IT YOURS.</h1><p>Keep your details up to date.</p></div></div>
+<div class="content-panel mb-5"><form asp-action="Index" method="post" enctype="multipart/form-data">@Html.AntiForgeryToken()<div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+@if (!string.IsNullOrEmpty(Model.ExistingPhotoUrl)) { <img src="@Model.ExistingPhotoUrl" alt="Your profile photo" class="profile-image mb-4" /> }
+<div class="row g-3"><div class="col-md-6"><label asp-for="PhoneNumber" class="form-label">Phone number</label><input asp-for="PhoneNumber" class="form-control" /></div><div class="col-md-6"><label asp-for="DateOfBirth" class="form-label">Date of birth</label><input asp-for="DateOfBirth" type="date" asp-format="{0:yyyy-MM-dd}" class="form-control" /></div>
+<div class="col-md-6"><label asp-for="EmergencyContactName" class="form-label">Emergency contact name</label><input asp-for="EmergencyContactName" class="form-control" /></div><div class="col-md-6"><label asp-for="EmergencyContactNumber" class="form-label">Emergency contact number</label><input asp-for="EmergencyContactNumber" class="form-control" /></div>
+<div class="col-12"><label asp-for="Photo" class="form-label">Profile picture (JPG, PNG or WebP, max 5 MB)</label><input asp-for="Photo" type="file" accept="image/png,image/jpeg,image/webp" class="form-control" /></div></div><button type="submit" class="btn btn-race mt-4">Update my profile</button></form></div>

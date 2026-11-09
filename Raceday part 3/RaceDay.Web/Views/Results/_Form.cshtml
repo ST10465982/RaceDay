@@ -1,0 +1,7 @@
+@model ResultFormViewModel
+<div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+<input asp-for="EventID" type="hidden"/><input asp-for="EnrollmentID" type="hidden"/><input asp-for="ResultID" type="hidden"/>
+<div class="row g-3"><div class="col-md-4"><label asp-for="FinishTime" class="form-label">Finish time (hh:mm:ss)</label><input asp-for="FinishTime" class="form-control" placeholder="01:05:30"/><span asp-validation-for="FinishTime" class="text-danger"></span></div>
+<div class="col-md-4"><label asp-for="OverallPosition" class="form-label">Overall place</label><input asp-for="OverallPosition" class="form-control" type="number" min="1" /></div>
+<div class="col-md-4"><label asp-for="CategoryPosition" class="form-label">Category place</label><input asp-for="CategoryPosition" class="form-control" type="number" min="1" /></div></div>
+<button type="submit" class="btn btn-race mt-4">Save result</button><a asp-action="Event" asp-route-eventId="@Model.EventID" class="btn btn-outline-secondary ms-2 mt-4">Back to results</a>

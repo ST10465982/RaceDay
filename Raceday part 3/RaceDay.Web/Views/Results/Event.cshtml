@@ -1,0 +1,9 @@
+@model ResultsPageViewModel
+@{ ViewData["Title"] = "Race results"; }
+<div class="page-header"><div><span class="eyebrow dark">ORGANISER / RESULTS</span><h1>FINISH LINE RESULTS.</h1><p>@Model.EventName</p></div><a class="btn btn-outline-race" asp-controller="Events" asp-action="Index">Back to events</a></div>
+<div class="row g-4 mb-5"><div class="col-lg-6"><div class="content-panel h-100"><h2 class="h4 fw-bold">Record results</h2><p class="small text-secondary">Select an active participant to record their finish time and positions.</p>
+@if (!Model.Enrollments.Any(e => e.EnrollmentStatus == "Active")) { <p>No active entries awaiting a result.</p> } else { <div class="list-group">@foreach(var e in Model.Enrollments.Where(e => e.EnrollmentStatus == "Active")) { <a class="list-group-item list-group-item-action d-flex justify-content-between" asp-action="Record" asp-route-eventId="@Model.EventID" asp-route-enrollmentId="@e.EnrollmentID"><span>@e.ParticipantName · @e.CategoryName</span><strong>Record →</strong></a> }</div> }</div></div>
+<div class="col-lg-6"><div class="content-panel h-100"><h2 class="h4 fw-bold">Published results</h2>
+@if (!Model.Results.Any()) { <p>No results captured yet.</p> } else { <div class="table-responsive"><table class="table align-middle"><thead><tr><th>Place</th><th>Participant</th><th>Finish time</th><th></th></tr></thead><tbody>
+@foreach(var r in Model.Results.OrderBy(r => r.OverallPosition)) { <tr><td>#@r.OverallPosition</td><td>@r.ParticipantName<div class="small text-secondary">@r.CategoryName</div></td><td>@r.FinishTime.ToString(@"hh\:mm\:ss")</td><td><a asp-action="Edit" asp-route-id="@r.ResultID" asp-route-eventId="@Model.EventID">Edit</a></td></tr> }
+</tbody></table></div> }</div></div></div>

@@ -1,0 +1,17 @@
+@model RegisterViewModel
+@{ ViewData["Title"] = "Join RaceDay"; }
+<div class="auth-shell py-5">
+    <div class="auth-aside"><span class="eyebrow">RACEDAY / JOIN THE COMMUNITY</span><h1>EVERY GREAT RACE HAS A FIRST STEP.</h1><p>Create your profile and find your place on the starting line.</p><div class="giant-number">JOIN.</div></div>
+    <div class="auth-card"><span class="eyebrow dark">GET STARTED</span><h2>Create an account</h2>
+        <form asp-action="Register" method="post">@Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+            <div class="row g-3"><div class="col-md-6"><label asp-for="FirstName" class="form-label">First name</label><input asp-for="FirstName" class="form-control"/><span asp-validation-for="FirstName" class="text-danger"></span></div>
+            <div class="col-md-6"><label asp-for="LastName" class="form-label">Last name</label><input asp-for="LastName" class="form-control"/><span asp-validation-for="LastName" class="text-danger"></span></div></div>
+            <label asp-for="Email" class="form-label mt-3">Email address</label><input asp-for="Email" class="form-control" autocomplete="email"/><span asp-validation-for="Email" class="text-danger"></span>
+            <div class="row g-3 mt-1"><div class="col-md-6"><label asp-for="Password" class="form-label">Password</label><input asp-for="Password" class="form-control" autocomplete="new-password"/><span asp-validation-for="Password" class="text-danger"></span></div>
+            <div class="col-md-6"><label asp-for="ConfirmPassword" class="form-label">Confirm password</label><input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password"/><span asp-validation-for="ConfirmPassword" class="text-danger"></span></div></div>
+            <label asp-for="Role" class="form-label mt-3">I am joining as</label><select asp-for="Role" class="form-select"><option value="Participant">Participant — enter events</option><option value="Organiser">Organiser — run events</option></select><span asp-validation-for="Role" class="text-danger"></span>
+            <button class="btn btn-race w-100 mt-4" type="submit">Create my account</button>
+        </form><p class="mt-4 mb-0">Already registered? <a asp-action="Login">Sign in</a></p>
+    </div>
+</div>

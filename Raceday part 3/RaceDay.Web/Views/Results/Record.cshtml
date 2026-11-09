@@ -1,0 +1,4 @@
+@model ResultFormViewModel
+@{ ViewData["Title"] = "Record result"; }
+<div class="page-header"><div><span class="eyebrow dark">ORGANISER / RACE RESULT</span><h1>RECORD A FINISH.</h1></div></div>
+<div class="content-panel mb-5"><form asp-action="Record" method="post">@Html.AntiForgeryToken()<partial name="_Form" model="Model"/></form></div>

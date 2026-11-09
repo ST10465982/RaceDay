@@ -1,0 +1,4 @@
+@model CategoryFormViewModel
+@{ ViewData["Title"] = "Add category"; }
+<div class="page-header"><div><span class="eyebrow dark">ORGANISER / CATEGORIES</span><h1>ADD A CATEGORY.</h1></div></div>
+<div class="content-panel mb-5"><form asp-action="Create" method="post">@Html.AntiForgeryToken()<partial name="_Form" model="Model"/></form></div>

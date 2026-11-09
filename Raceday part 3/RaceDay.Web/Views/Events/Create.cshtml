@@ -1,0 +1,4 @@
+@model EventFormViewModel
+@{ ViewData["Title"] = "Create event"; }
+<div class="page-header"><div><span class="eyebrow dark">ORGANISER / NEW EVENT</span><h1>BUILD YOUR NEXT RACE.</h1></div></div>
+<div class="content-panel mb-5"><form asp-action="Create" method="post" enctype="multipart/form-data">@Html.AntiForgeryToken()<partial name="_Form" model="Model" /></form></div>
