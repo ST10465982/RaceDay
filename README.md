@@ -344,3 +344,66 @@ The Part 2 demonstration presents:
 AI tools were used to assist with planning, code review, troubleshooting, documentation and proofreading during development.
 
 The final project structure, implementation, database execution, API testing, automated testing and submission were reviewed by the student.
+
+---
+
+# Part 3 – RaceDay MVC Web Application
+
+## Overview
+RaceDay Part 3 introduces an ASP.NET Core MVC website integrated with the existing RaceDay REST API.
+
+## Features
+- Participant and Organiser registration and login
+- Role-based dashboards and navigation
+- Event creation, editing and management
+- Event categories and participant enrolments
+- Race result recording and viewing
+- Responsive Bootstrap website
+- Azure Blob Storage integration for images
+
+## Technology Stack
+- C# and .NET 8
+- ASP.NET Core MVC and Web API
+- Entity Framework Core
+- SQL Server
+- Bootstrap
+- Docker
+- GitHub Actions
+- Azure Blob Storage integration
+
+## Running in GitHub Codespaces
+From the repository root:
+
+1. Run: bash scripts/setup-codespaces.sh
+2. In a new terminal: bash scripts/run-api.sh
+3. In another terminal: bash scripts/run-web.sh
+4. Open port 5080 in the Codespaces Ports tab.
+
+## Automated Testing
+Run:
+
+dotnet test "Raceday part 3/Raceday.API.sln"
+
+With the API and website running, execute:
+
+python3 scripts/smoke-test.py
+
+## Docker
+The MVC Dockerfile is located at:
+Raceday part 3/RaceDay.Web/Dockerfile
+
+Build the website image using:
+
+docker build -t raceday-web -f "Raceday part 3/RaceDay.Web/Dockerfile" "Raceday part 3"
+
+## Azure Storage
+The API includes Azure Blob Storage integration for event images.
+Actual uploads require AzureStorage:ConnectionString and
+AzureStorage:ContainerName configuration.
+
+## Continuous Integration
+The Part 3 GitHub Actions workflow is located at:
+.github/workflows/part3-ci.yml
+
+It is configured to build the solution, execute automated tests
+and run registration and login smoke tests.
