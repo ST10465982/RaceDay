@@ -1,0 +1,77 @@
+name: RaceDay Part 3 CI and Login Smoke Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  part3-build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore Part 3 solution
+        run: dotnet restore 'Raceday part 3/Raceday.API.sln'
+      - name: Build Part 3 solution
+        run: dotnet build 'Raceday part 3/Raceday.API.sln' --configuration Release --no-restore
+      - name: Run Part 3 automated tests
+        run: dotnet test 'Raceday part 3/Raceday.API.sln' --configuration Release --no-build --verbosity normal
+
+  registration-login-smoke:
+    runs-on: ubuntu-latest
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          ACCEPT_EULA: Y
+          MSSQL_SA_PASSWORD: RaceDayCi1!TestOnly2026
+        ports:
+          - 1433:1433
+    env:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__RaceDayConnection: 'Server=127.0.0.1,1433;Database=RaceDayCI;User Id=sa;Password=RaceDayCi1!TestOnly2026;Encrypt=True;TrustServerCertificate=True;MultipleActiveResultSets=true'
+      RaceDayApi__BaseUrl: 'http://localhost:5081/'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Build Part 3 solution
+        run: dotnet build 'Raceday part 3/Raceday.API.sln' --configuration Release
+      - name: Install EF Core tooling
+        run: dotnet tool install --global dotnet-ef --version 8.0.11
+      - name: Apply SQL Server migrations
+        shell: bash
+        run: |
+          export PATH="$HOME/.dotnet/tools:$PATH"
+          for i in $(seq 1 25); do
+            if dotnet ef database update --project 'Raceday part 3/Raceday.API.csproj' --startup-project 'Raceday part 3/Raceday.API.csproj' --no-build --configuration Release; then
+              exit 0
+            fi
+            echo "SQL Server not yet ready (attempt $i)"
+            sleep 5
+          done
+          exit 1
+      - name: Run MVC website and API and test registration/login
+        shell: bash
+        run: |
+          dotnet run --project 'Raceday part 3/Raceday.API.csproj' --no-build --configuration Release --no-launch-profile --urls http://127.0.0.1:5081 > "$RUNNER_TEMP/raceday-api.log" 2>&1 &
+          dotnet run --project 'Raceday part 3/RaceDay.Web/RaceDay.Web.csproj' --no-build --configuration Release --no-launch-profile --urls http://127.0.0.1:5080 > "$RUNNER_TEMP/raceday-web.log" 2>&1 &
+          for i in $(seq 1 30); do
+            if curl --silent --fail http://localhost:5081/swagger/index.html >/dev/null && curl --silent --fail http://localhost:5080/ >/dev/null; then
+              python3 scripts/smoke-test.py
+              exit $?
+            fi
+            sleep 3
+          done
+          echo 'API or website did not become ready.' >&2
+          exit 1
+      - name: Print diagnostic logs if smoke test fails
+        if: failure()
+        run: |
+          tail -100 "$RUNNER_TEMP/raceday-api.log" 2>/dev/null || true
+          tail -100 "$RUNNER_TEMP/raceday-web.log" 2>/dev/null || true

@@ -1,0 +1,10 @@
+# Local runtime secrets and build artifacts
+.raceday-codespaces.env
+**/bin/
+**/obj/
+.vs/
+.vscode/
+
+# Emergency Codespaces logs
+.raceday-api.log
+.raceday-web.log

@@ -1,0 +1,16 @@
+RaceDay Part 3 - 2-hour submission recovery
+
+1. Extract this ZIP into the MAIN /workspaces/RaceDay folder (NOT inside Raceday part 3).
+2. In previous API/Web terminal tabs press Ctrl+C to stop both old apps.
+3. Run ONE command from /workspaces/RaceDay:
+   bash scripts/repair-and-test.sh
+4. It builds the existing Part 3 solution, starts the SQL Server Docker database,
+   migrates, launches the API and website, tests direct API registration,
+   tests MVC registration and login for both roles, and shows diagnostic errors.
+5. If tests pass, open the Codespaces Ports tab and visit port 5080.
+6. Stage/commit your source code and screenshots before the deadline. Do not
+   commit the local .raceday-codespaces.env password file or runtime logs.
+
+If a port is already in use, stop the earlier process from its terminal tab.
+DO NOT delete the original RaceDay project or re-create the API/web projects.
+Azure Blob Storage still needs legitimate credentials, if required by rubric.
