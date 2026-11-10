@@ -1,3 +1,15 @@
+
+## Part 3 – Demonstration Video
+
+This video demonstrates the RaceDay Part 3 MVC
+web application, including registration, login,
+event management, participant enrolment,
+race results and the GitHub implementation.
+
+**Watch the demonstration video:**
+[RaceDay Part 3 Demo](https://youtu.be/ywPwLtoSGQU)
+
+
 # RaceDay
 
 RaceDay is a web-based event management system developed for the South African road running, walking and cycling community. The system provides a central platform for Organisers to manage events and for Participants to register for events, select categories and view race results.
